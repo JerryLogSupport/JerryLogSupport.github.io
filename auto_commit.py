@@ -23,6 +23,11 @@ class GitAutoCommitHandler(FileSystemEventHandler):
             return
 
         file_path = Path(event.src_path)
+
+        # 新增：忽略 .git 目录下的所有文件
+        if '.git' in file_path.parts:
+            return
+
         relative_path = file_path.relative_to(REPO_DIR)
 
         # 如果设置了只监控特定文件，这里过滤
